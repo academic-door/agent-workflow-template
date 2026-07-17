@@ -34,7 +34,7 @@ Issue defines the goal and acceptance criteria
 
 ## Scope and Boundaries
 
-Cloud agents are suited to repository-native code, documentation, configuration, tests, and Pull Requests. They generally cannot access local data, PDFs, images, desktop software, or private files that have not been uploaded; use a local agent for those tasks. Maintainers remain responsible for research decisions, data privacy, and release risk.
+Cloud agents are suited to repository-native code, documentation, configuration, tests, and Pull Requests. They generally cannot access proprietary data, desktop environments, or private files that have not been uploaded; use a tool with the required local access for those tasks. Maintainers remain responsible for business decisions, data privacy, and release risk.
 
 This template contains no personal projects, credentials, private data, or local paths. After copying it, add the build and test commands specific to the target repository.
 
