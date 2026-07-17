@@ -1,0 +1,63 @@
+name: Agent Task
+description: Define a scoped task for Codex, Claude, or another coding agent.
+title: "[Agent] "
+labels:
+  - agent-task
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template when you want an agent to implement a scoped change through a branch and pull request.
+
+  - type: textarea
+    id: background
+    attributes:
+      label: Background
+      description: What problem should the agent solve?
+      placeholder: Explain the context and why this matters.
+    validations:
+      required: true
+
+  - type: textarea
+    id: allowed-files
+    attributes:
+      label: Allowed files or areas
+      description: List the files, folders, or modules the agent may modify.
+      placeholder: |
+        - docs/
+        - tests/
+        - scripts/check_*.py
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: What must be true before the PR can be merged?
+      placeholder: |
+        - [ ] Tests pass
+        - [ ] Documentation is updated
+        - [ ] No private data, token, or real email is committed
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints
+      description: What should the agent avoid?
+      placeholder: |
+        - Do not change main directly
+        - Do not publish this repository
+        - Do not change project branding
+
+  - type: textarea
+    id: test-plan
+    attributes:
+      label: Suggested test plan
+      description: Optional commands, checks, or manual review steps.
+      placeholder: |
+        - python -m unittest
+        - Check generated PDF manually
+
