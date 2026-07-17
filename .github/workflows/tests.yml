@@ -19,6 +19,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          # PR 事件默认检出 GitHub 生成的临时 merge ref，可能带入维护者的
+          # 提交邮箱。检查真实 head commit，避免隐私门禁误报。
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Set up Python
         uses: actions/setup-python@v5

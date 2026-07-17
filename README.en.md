@@ -2,57 +2,45 @@
 
 [中文](README.md) | English
 
-This repository is a template for building a reviewable GitHub workflow with cloud coding agents such as Codex or Claude.
+A reusable, auditable workflow for collaborating with AI coding agents on GitHub.
 
-The goal is not to let an agent freely change your main branch. The goal is to make agent work visible, scoped, tested, reviewed, and merged by a human maintainer.
+The template organizes task definition, branch-based implementation, automated checks, review, and human approval into one repeatable process:
 
 ```text
-Issue defines the task
-→ Agent implements on a branch
-→ Pull Request
-→ GitHub Actions checks
-→ Agent or human review
+Issue defines the goal and acceptance criteria
+→ Agent implements on an isolated branch
+→ Pull Request proposes the change
+→ GitHub Actions run automated checks
+→ Agent or human reviews the change
 → Maintainer confirms risk
-→ Merge to main
+→ Merge into main
 ```
 
-## Who This Is For
+## Use Cases
 
-Use this template if:
+- Involving Codex, Claude Code, or other cloud agents in repository work.
+- Requiring every agent change to go through a branch and Pull Request.
+- Defining file scope, acceptance criteria, and privacy boundaries before implementation.
+- Running tests, repository hygiene checks, and commit-email checks automatically.
+- Reusing the same collaboration policy across software, research tools, websites, data pipelines, and templates.
 
-- You want Codex or Claude to collaborate on GitHub repositories.
-- You want every agent task to start from a structured Issue.
-- You want agents to work on branches instead of directly changing `main`.
-- You want CI to check tests and commit email hygiene.
-- You want a repeatable process for research tools, websites, data pipelines, or template repositories.
+## Included Capabilities
 
-## What This Is Not
+- **Issue template:** records the objective, context, allowed files, acceptance criteria, and privacy requirements.
+- **Agent policy:** `AGENTS.md` defines scope, validation, and prohibited actions.
+- **Pull Request template:** requests a change summary, test results, risk notes, and privacy confirmation.
+- **Automated checks:** GitHub Actions run tests and repository hygiene checks.
+- **Branch protection:** can require passing CI, at least one approval, and resolved review conversations before merge.
 
-- It is not a GitHub contribution graph automation script.
-- It does not publish your private repository.
-- It does not give an agent access to your GitHub password or local files.
-- It does not replace human review for research judgment, data privacy, or release decisions.
+## Scope and Boundaries
 
-## Cloud Agents vs Local Agents
+Cloud agents are suited to repository-native code, documentation, configuration, tests, and Pull Requests. They generally cannot access local data, PDFs, images, desktop software, or private files that have not been uploaded; use a local agent for those tasks. Maintainers remain responsible for research decisions, data privacy, and release risk.
 
-Cloud agents are useful for repository-native work:
-
-- reading GitHub Issues and Pull Requests
-- editing repository files
-- creating branches and PRs
-- running repository tests
-- reviewing code changes
-
-Local agents are useful when the work depends on your computer:
-
-- local data
-- PDFs and images on disk
-- Stata or other desktop software
-- private files that should not be uploaded to GitHub
+This template contains no personal projects, credentials, private data, or local paths. After copying it, add the build and test commands specific to the target repository.
 
 ## Quick Start
 
-Copy these files into your repository:
+Copy these files into the target repository:
 
 ```text
 AGENTS.md
@@ -64,9 +52,20 @@ scripts/check_commit_emails.py
 tests/test_commit_emails.py
 ```
 
-Then create an Issue with the Agent Task template and ask your agent to implement it on a branch and open a PR.
+Then:
+
+1. Create an Issue with the `Agent Task` template.
+2. Ask Codex or Claude to create an isolated branch from `main` for that Issue.
+3. Require the agent to stay within the allowed scope, run tests, and open a Pull Request.
+4. Inspect the diff, Actions results, and review feedback.
+5. Merge only after the maintainer confirms correctness, privacy, and release risk.
+
+See [GitHub Agent Workflow](docs/github-agent-workflow.zh-CN.md) for configuration details.
+
+## Contributor Records
+
+GitHub generally attributes Contributors from commits that reach the default branch and have an author identity associated with a GitHub account. A cloud Codex code review, Issue comment, or Actions run does not automatically create a Contributor named “Codex”. The Contributor view is therefore not the acceptance criterion for this template; Issues, Pull Requests, CI, and review records are the primary workflow artifacts.
 
 ## License
 
-This template uses the MIT License by default.
-
+This template is released under the [MIT License](LICENSE). You may copy, modify, and integrate it into your projects while retaining the license notice.
