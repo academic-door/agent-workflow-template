@@ -18,7 +18,7 @@ Issue defines the goal and acceptance criteria
 
 ## Use Cases
 
-- Involving Codex, Claude Code, or other cloud agents in repository work.
+- Involving Codex, Claude, or other cloud agents in repository work.
 - Requiring every agent change to go through a branch and Pull Request.
 - Defining file scope, acceptance criteria, and privacy boundaries before implementation.
 - Running tests, repository hygiene checks, and commit-email checks automatically.
@@ -29,7 +29,7 @@ Issue defines the goal and acceptance criteria
 - **Issue template:** records the objective, context, allowed files, acceptance criteria, and privacy requirements.
 - **Agent policy:** `AGENTS.md` defines scope, validation, and prohibited actions.
 - **Pull Request template:** requests a change summary, test results, risk notes, and privacy confirmation.
-- **Automated checks:** GitHub Actions run tests and repository hygiene checks.
+- **Automated checks:** GitHub Actions run tests, repository hygiene checks, and commit-email checks.
 - **Branch protection:** can require passing CI, at least one approval, and resolved review conversations before merge.
 
 ## Scope and Boundaries
@@ -49,13 +49,15 @@ AGENTS.md
 .github/workflows/tests.yml
 docs/github-agent-workflow.zh-CN.md
 scripts/check_commit_emails.py
+scripts/check_repository_hygiene.py
 tests/test_commit_emails.py
+tests/test_repository_hygiene.py
 ```
 
 Then:
 
 1. Create an Issue with the `Agent Task` template.
-2. Ask Codex or Claude to create an isolated branch from `main` for that Issue.
+2. Point Codex, Claude, or another cloud agent at the repository and Issue number, and ask it to create an isolated branch from `main`.
 3. Require the agent to stay within the allowed scope, run tests, and open a Pull Request.
 4. Inspect the diff, Actions results, and review feedback.
 5. Merge only after the maintainer confirms correctness, privacy, and release risk.
@@ -64,7 +66,13 @@ See [GitHub Agent Workflow](docs/github-agent-workflow.zh-CN.md) for configurati
 
 ## Contributor Records
 
-GitHub generally attributes Contributors from commits that reach the default branch and have an author identity associated with a GitHub account. A cloud Codex code review, Issue comment, or Actions run does not automatically create a Contributor named “Codex”. The Contributor view is therefore not the acceptance criterion for this template; Issues, Pull Requests, CI, and review records are the primary workflow artifacts.
+GitHub attributes Contributors from commits that reach the default branch with an author identity associated with a GitHub account. A cloud agent's code review, Issue comment, or Actions run does not by itself create a Contributor record. Agent-assisted changes are typically attributed in one of three ways:
+
+- **Human author:** changes written and committed by a human maintainer keep the human author identity.
+- **Co-author trailer:** changes written by an agent but committed through a human account should carry a `Co-Authored-By` trailer (for example `Co-Authored-By: Claude <noreply@anthropic.com>`). Once the commit reaches the default branch, the agent appears as a co-author.
+- **Bot identity:** changes committed directly under a recognized bot identity (for example via a GitHub App integration) can appear in Contributors under that identity.
+
+In every case, Issues, Pull Requests, CI, and review records are the primary workflow artifacts; the Contributor view is a by-product of commit authorship and is not an acceptance criterion for this template.
 
 ## License
 
